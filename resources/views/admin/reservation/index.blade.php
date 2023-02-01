@@ -1,9 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-
     <!-- Main content -->
     <section class="content">
-
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -43,7 +41,7 @@
                     <td>{{ $reservation->first_name }} {{ $reservation->last_name }}</td>
                     <td>{{ $reservation->email }}</td>
                     <td>{{ $reservation->phone }}</td>
-                    <td>{{ $reservation->res_date }}</td>
+                    <td>{{ $reservation->res_date->format('d.m.Y') }}</td>
                     <td>{{ $reservation->table->table_number }}</td>
                     <td>{{ $reservation->guest_count }}</td>
                     <td><div class="flex space-x-2">
@@ -81,5 +79,4 @@
         </div>
       </div>
     </section>
-   
 @endsection
