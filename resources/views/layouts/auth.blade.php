@@ -14,8 +14,6 @@
         <!-- overlayScrollbars -->
         <!-- Theme style -->
         @vite(['resources/css/app.css', 'resources/css/all.min.css', 'resources/css/OverlayScrollbars.min.css', 'resources/css/adminlte.min.css'])
-
-        
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <!-- Site wrapper -->

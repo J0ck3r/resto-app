@@ -125,13 +125,5 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <form method="POST" action="{{ route('logout') }}">
-        @csrf
-      <li class="nav-item d-none d-sm-inline-block">
-        <button type="submit" class="btn btn-block btn-danger btn-sm">
-          {{ __('Log Out') }}
-      </button>
-    </form>
-      </li>
     </ul>
     

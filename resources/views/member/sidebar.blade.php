@@ -63,6 +63,18 @@
               </p>
             </a>
           </li>
+          <li class="nav-item"></a>
+            <div class="nav-link">
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <li class="nav-item d-none d-sm-inline-block">
+                    <button type="submit" class="btn btn-block btn-danger btn-sm">
+                      {{ __('Log Out') }}
+                    </button>
+                  </li>
+                </form>
+            </div>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

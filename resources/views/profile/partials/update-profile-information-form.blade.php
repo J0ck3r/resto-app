@@ -1,5 +1,3 @@
-@extends('layouts.auth')
-@section('content')
 <section class="content">
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -15,50 +13,66 @@
         @csrf
     </form>
     
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="form-horizontal">
         @csrf
         @method('patch')
 
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Name') }} </label>
-            <input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Name') }} </label>
+            <div class="col-sm-10">
+            <input id="name" name="name" type="text" class="form-control" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Surname') }} </label>
-            <input id="surname" name="surname" type="text" class="mt-1 block w-full" :value="old('surname', $user->surname)" required autofocus autocomplete="surname" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Surname') }} </label>
+            <div class="col-sm-10">
+            <input id="surname" name="surname" type="text" class="form-control" :value="old('surname', $user->surname)" required autofocus autocomplete="surname" />
             <x-input-error class="mt-2" :messages="$errors->get('surname')" />
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Restaurant') }} </label>
-            <input id="restaurant" name="restaurant" type="text" class="mt-1 block w-full" :value="old('restaurant', $user->restaurant)" required autofocus autocomplete="restaurant" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Restaurant') }} </label>
+            <div class="col-sm-10">
+            <input id="restaurant" name="restaurant" type="text" class="form-control" :value="old('restaurant', $user->restaurant)" required autofocus autocomplete="restaurant" />
             <x-input-error class="mt-2" :messages="$errors->get('restaurant')" />
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Street') }} </label>
-            <input id="street" name="street" type="text" class="mt-1 block w-full" :value="old('street', $user->street)" required autofocus autocomplete="street" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Street') }} </label>
+            <div class="col-sm-10">
+            <input id="street" name="street" type="text" class="form-control" :value="old('street', $user->street)" required autofocus autocomplete="street" />
             <x-input-error class="mt-2" :messages="$errors->get('street')" />
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Housenumber') }} </label>
-            <input id="housenumber" name="housenumber" type="text" class="mt-1 block w-full" :value="old('housenumber', $user->housenumber)" required autofocus autocomplete="housenumber" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Housenumber') }} </label>
+            <div class="col-sm-10">
+            <input id="housenumber" name="housenumber" type="text" class="form-control" :value="old('housenumber', $user->housenumber)" required autofocus autocomplete="housenumber" />
             <x-input-error class="mt-2" :messages="$errors->get('housenumber')" />
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Town') }} </label>
-            <input id="town" name="name" type="text" class="mt-1 block w-full" :value="old('town', $user->town)" required autofocus autocomplete="town" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Town') }} </label>
+            <div class="col-sm-10">
+            <input id="town" name="name" type="text" class="form-control" :value="old('town', $user->town)" required autofocus autocomplete="town" />
             <x-input-error class="mt-2" :messages="$errors->get('town')" />
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Phone') }} </label>
-            <input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" required autofocus autocomplete="phone" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Phone') }} </label>
+            <div class="col-sm-10">
+            <input id="phone" name="phone" type="text" class="form-control" :value="old('phone', $user->phone)" required autofocus autocomplete="phone" />
             <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="mb-1"> {{ __('Email') }} </label>
-            <input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="email" />
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> {{ __('Email') }} </label>
+            <div class="col-sm-10">
+            <input id="email" name="email" type="email" class="form-control" :value="old('email', $user->email)" required autocomplete="email" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            </div>
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
@@ -94,4 +108,3 @@
         </div>
     </form>
 </section>
-@endsection
