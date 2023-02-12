@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.auth')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('admin.reservation.store') }}">
+            <form method="POST" action="{{ route('member.reservation.store') }}">
               @csrf
               <div class="card-body">
                 <div class="form-group">
@@ -58,7 +58,6 @@
                 @error('guest_count')
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
-                <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
                 <div class="form-group">
                   <label for="table_id" class="block">{{ __('Table') }}</label>
                   <select id="table_id" name="table_id">

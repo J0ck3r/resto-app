@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.auth')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('admin.categories.store')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('member.categories.store')}}" enctype="multipart/form-data">
               @csrf
               <div class="card-body">
                 <div class="form-group">
@@ -30,7 +30,6 @@
                 @error('description')
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
-                <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                 <div class="form-group">
                   <label for="image">{{ __('Image') }}</label>
                   <div class="input-group">
@@ -42,6 +41,7 @@
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
               </div>
+              <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
               <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">{{ __('Store') }}</button>

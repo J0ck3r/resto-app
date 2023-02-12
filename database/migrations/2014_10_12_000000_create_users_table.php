@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
-            $table->string('restaurant');
             $table->string('street');
             $table->string('housenumber');
             $table->string('town');
@@ -29,6 +28,7 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
             $table->boolean('terms');
         });

@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Member;
 
-use App\Enums\TableStatus;
+use Carbon\Carbon;
 use App\Models\Table;
+use App\Enums\TableStatus;
+use App\Models\Restaurant;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReservationStoreRequest;
-use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
@@ -19,12 +21,29 @@ class ReservationController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $restaurants = Restaurant::where('user_id', $user_id)->get(['id']);
+
+        $reservations = [];
+
+        foreach ($restaurants as $restaurant) 
         {
-            $reservations = Reservation::all();
-            return view('admin.reservation.index', compact('reservations'));
-        }
+            $restaurant_id = $restaurant->id;
     
-    }
+            $tables = Table::where('restaurant_id', $restaurant_id)->get(['id']);
+
+        foreach ($tables as $table) 
+        {
+            $table_id = $table->id;
+
+            $reservations[] = Reservation::where('table_id', $table_id)->get();
+        }
+        }
+
+            return view('member.reservation.index', ['reservations' => $reservations]);
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -34,7 +53,7 @@ class ReservationController extends Controller
     public function create()
     {
         $tables = Table::where('status', TableStatus::Avaliable)->get();
-        return view('admin.reservation.create', compact('tables'));
+        return view('member.reservation.create', compact('tables'));
     }
 
     /**
@@ -60,7 +79,9 @@ class ReservationController extends Controller
         }
         Reservation::create($request->validated());
 
-        return to_route('admin.reservation.index')->with('success', 'Reservation created successfully');
+        
+
+        return to_route('member.reservation.index')->with('success', 'Reservation created successfully');
     }
 
     /**
@@ -83,7 +104,7 @@ class ReservationController extends Controller
     public function edit(Reservation $reservation)
     {
         $tables = Table::where('status', TableStatus::Avaliable)->get();
-        return view('admin.reservation.edit', compact('reservation', 'tables'));
+        return view('member.reservation.edit', compact('reservation', 'tables'));
     }
 
     /**
@@ -111,7 +132,7 @@ class ReservationController extends Controller
         }
         $reservation->update($request->validated());
 
-        return to_route('admin.reservation.index')->with('success', 'Reservation updated successfully');
+        return to_route('member.reservation.index')->with('success', 'Reservation updated successfully');
     }
 
     /**
@@ -124,6 +145,6 @@ class ReservationController extends Controller
     {
         $reservation->delete();
 
-        return to_route('admin.reservation.index')->with('warning', 'Reservation deleted successfully');
+        return to_route('member.reservation.index')->with('warning', 'Reservation deleted successfully');
     }
 }

@@ -19,14 +19,12 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-3">
-
           <!-- Profile Image -->
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
               <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle"
-                src="{{ Auth::user()->image }}, {{ asset('public/image/avatar.png') }}"
-                     alt="User profile picture">
+                src="{{ Auth::user()->image }}, {{ asset('public/image/avatar.png') }}" alt="User profile picture">
               </div>
               <h3 class="profile-username text-center">{{ Auth::user()->name }} {{ Auth::user()->surname }}</h3>
               </ul>

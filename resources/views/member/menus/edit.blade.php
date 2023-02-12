@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.auth')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('admin.menus.update', $menu->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('member.menus.update', $menu->id) }}" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <div class="card-body">
@@ -38,15 +38,18 @@
                 @error('price')
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
-                <div class="form-group">
-                  <label for="categories" class="block">{{ __('Categories') }}</label>
-                  <select id="categories" name="categories[]" multiple>
-                    @foreach ($categories as $category)
-                      <option value="{{ $category->id }}" @selected($menu->categories->contains($category))>{{ $category->name }}</option>
-                    @endforeach
-                  </select>
+                <h5>{{ _('Categories') }}</h5>
+                <div class="form-group clearfix">
+                  @foreach ($categories as $category)
+                  <label>
+                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"@checked($menu->categories->contains($category))>
+                    <span></span>
+                    {{ $category->name }}
+                  </label>
+                  <br>
+                  @endforeach
                 </div>
-                <div class="form-group">
+                <div class="form-group">  
                   <label for="image">{{ __('Image') }}</label>
                     <div class="w-32 h-32">
                       <img src="{{ Storage::url($menu->image) }}">

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,8 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.categories.index', compact('categories'));
+        $restaurants = Restaurant::all();
+        return view('member.categories.index', compact('categories'));
     }
 
     /**
@@ -28,7 +29,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Category::all();
+        return view('member.categories.create', compact('restaurants'));
     }
 
     /**
@@ -43,12 +45,12 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $request->name,
-            'user_id' => $request->user_id,
             'description' => $request->description,
-            'image' => $image
+            'image' => $image,
+            'user_id' => $request->user_id
         ]);
 
-        return to_route('admin.categories.index')->with('success', 'Category created successfully');
+        return to_route('member.categories.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -70,7 +72,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        return view('member.categories.edit', compact('category'));
     }
 
     /**
@@ -97,7 +99,7 @@ class CategoryController extends Controller
             'description' => $request->description,
             'image'=> $image
         ]);
-        return to_route('admin.categories.index')->with('success', 'Category updated successfully');
+        return to_route('member.categories.index')->with('success', 'Category updated successfully');
     }
 
     /**
@@ -112,6 +114,6 @@ class CategoryController extends Controller
         $category->menus()->detach();
         $category->delete();
 
-        return to_route('admin.categories.index')->with('danger', 'Category deleted successfully');
+        return to_route('member.categories.index')->with('danger', 'Category deleted successfully');
     }
 }

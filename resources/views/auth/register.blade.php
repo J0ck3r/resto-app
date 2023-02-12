@@ -24,14 +24,6 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control @error('restaurant') is-invalid @enderror" name="restaurant" placeholder="{{ __('Restaurant') }}">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
             <input type="text" class="form-control @error('street') is-invalid @enderror" name="street" placeholder="{{ __('Street') }}">
             <div class="input-group-append">
               <div class="input-group-text">

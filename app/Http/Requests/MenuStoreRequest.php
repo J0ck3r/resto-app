@@ -25,9 +25,9 @@ class MenuStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'user_id' => ['required', 'integer'],
             'description' => ['required', 'string'],
             'price' => ['required', 'string'],
+            'restaurant_id' => ['required', 'integer'],
             'image' => ['required', 'image','mimes:jpeg,png,jpg,gif,svg|max:2048'],
         ];
     }

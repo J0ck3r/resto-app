@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Member;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TableStoreRequest;
 use App\Models\Table;
+use App\Enums\TableStatus;
+use App\Models\Restaurant;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TableStoreRequest;
 
 class TableController extends Controller
 {
@@ -17,8 +21,9 @@ class TableController extends Controller
     public function index()
     {
         {
+            $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
             $tables = Table::all();
-            return view('admin.tables.index', compact('tables'));
+            return view('member.tables.index', compact('tables', 'restaurants'));
         }
     
     }
@@ -30,7 +35,8 @@ class TableController extends Controller
      */
     public function create()
     {
-        return view('admin.tables.create');
+        $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
+        return view('member.tables.create', compact('restaurants'));
     }
 
     /**
@@ -43,12 +49,13 @@ class TableController extends Controller
     {
         Table::create([
             'table_number' => $request->table_number,
-            'user_id' => $request->user_id,
+            'restaurant_id' => $request->restaurant_id,
             'guest_count' => $request->guest_count,
             'status' => $request->status,
             'location' => $request->location
         ]);
-        return to_route('admin.tables.index')->with('success', 'Table created successfully');
+
+        return to_route('member.tables.index')->with('success', 'Table created successfully');
     }
 
     /**
@@ -70,7 +77,8 @@ class TableController extends Controller
      */
     public function edit(Table $table)
     {
-        return view('admin.tables.edit', compact('table'));
+        $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
+        return view('member.tables.edit', compact('table', 'restaurants'));
     }
 
     /**
@@ -81,9 +89,11 @@ class TableController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(TableStoreRequest $request, Table $table)
-    {
-        $table->update($request->validated());
-        return to_route('admin.tables.index')->with('success', 'Table updated successfully');
+    { 
+        {
+            $table->update($request->validated());
+        } 
+            return to_route('member.tables.index')->with('success', 'Table updated successfully');
     }
 
     /**
@@ -97,6 +107,6 @@ class TableController extends Controller
         $table->delete();
         $table->reservations()->delete();
 
-        return to_route('admin.tables.index')->with('danger', 'Table deleted successfully');
+        return to_route('member.tables.index')->with('danger', 'Table deleted successfully');
     }
 }

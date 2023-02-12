@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TableStoreRequest extends FormRequest
@@ -24,10 +25,13 @@ class TableStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'table_number' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
+            'table_number' => ['required', Rule::unique('tables')->where(function ($query) 
+                {
+                    return $query->where('restaurant_id', $this->restaurant_id);
+                })],
             'status' => ['required', 'string'],
             'guest_count' => ['required', 'integer'],
+            'restaurant_id' => ['required', 'integer'],
             'location' => ['required', 'string'],
         ];
     }

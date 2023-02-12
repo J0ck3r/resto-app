@@ -25,9 +25,9 @@ class RestaurantStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'user_id' => ['required', 'integer'],
             'description' => ['required', 'string'],
             'location' => ['required', 'string'],
+            'user_id' => ['required', 'integer'],
             'image' => ['required', 'image','mimes:jpeg,png,jpg,gif,svg|max:2048'],
         ];
     }

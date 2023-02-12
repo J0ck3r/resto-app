@@ -9,11 +9,12 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Font Awesome -->
         <!-- overlayScrollbars -->
         <!-- Theme style -->
-        @vite(['resources/css/app.css', 'resources/css/all.min.css', 'resources/css/OverlayScrollbars.min.css', 'resources/css/adminlte.min.css'])
+        @vite(['resources/css/app.css', 'resources/css/all.min.css', 'resources/css/OverlayScrollbars.min.css', 'resources/css/adminlte.min.css', 'resources/css/icheck-bootstrap.min.css'])
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <!-- Site wrapper -->

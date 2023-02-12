@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.auth')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('admin.reservation.update', $reservation->id) }}">
+            <form method="POST" action="{{ route('member.reservation.update', $reservation->id) }}">
               @csrf
               @method('PUT')
               <div class="card-body">

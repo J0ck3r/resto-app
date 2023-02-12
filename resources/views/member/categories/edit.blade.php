@@ -9,47 +9,48 @@
           <!-- general form elements -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">{{ __('Edit Restaurant') }}</h3>
+              <h3 class="card-title">{{ __('New Category') }}</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            @foreach ($restaurants as $restaurant)
-            @if (Auth::user()->id === $restaurant->user_id)
-            <form method="POST" action="{{ route('member.restaurants.update', $restaurant->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('member.categories.update', $category->id) }}" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <div class="card-body">
                 <div class="form-group">
                   <label for="name">{{ __('Name') }}</label>
-                  <input type="text" class="form-control" id="name" name="name" value="{{ $restaurant->name }}">
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ $category->name }}">
                 </div>
+                @error('name')
+                  <div class="text-sm text-red-400">{{ $message }}</div>
+                @enderror
                 <div class="form-group">
                   <label for="description">{{ __('Description') }}</label>
-                  <textarea class="form-control" id="description" rows="3" name="description">{{  $restaurant->description }}</textarea>
+                  <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="3" name="description">{{  $category->description }}</textarea>
                 </div>
-                <div class="form-group">
-                  <label for="location">{{ __('Location') }}</label>
-                  <input type="text" class="form-control" id="location" name="location" value="{{ $restaurant->location }}">
-                </div>
+                @error('description')
+                  <div class="text-sm text-red-400">{{ $message }}</div>
+                @enderror
                 <div class="form-group">
                   <label for="image">{{ __('Image') }}</label>
                     <div class="w-32 h-32">
-                      <img src="{{ Storage::url($restaurant->image) }}">
+                      <img src="{{ Storage::url($category->image) }}">
                     </div>
                   <div class="input-group">
                     <div class="custom-file">
-                      <input type="file" class="form-control" id="image" name="image">
+                      <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
                     </div>
                   </div>
                 </div>
+                @error('image')
+                  <div class="text-sm text-red-400">{{ $message }}</div>
+                @enderror
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
               </div>
             </form>
-            @endif
-            @endforeach
           </div>
           <!-- /.card -->
         </div>

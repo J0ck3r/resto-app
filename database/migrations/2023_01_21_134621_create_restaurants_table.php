@@ -16,12 +16,12 @@ return new class extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->default('active');
-            $table->integer('user_id');
+            $table->boolean('is_active')->default(1);
             $table->string('name');
             $table->string('description');
             $table->string('location');
             $table->string('image');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

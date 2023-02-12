@@ -26,7 +26,6 @@ class ReservationController extends Controller
     {
         $validated = $request->validate([
             'first_name' => ['required', 'string'],
-            'user_id' => ['requred', 'integer'],
             'last_name' => ['required', 'string'],
             'guest_count' => ['required', 'integer'],
             'email' => ['required', 'email'],

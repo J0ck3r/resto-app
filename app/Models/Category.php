@@ -15,4 +15,9 @@ public function menus()
      return $this->belongsToMany(Menu::class, 'category_menu');
 }
 
+public function restos()
+{
+     return $this->belongsToMany(Menu::class, 'restaurant_category');
+}
+
 }

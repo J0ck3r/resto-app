@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Member;
 
 use App\Models\Menu;
+use App\Models\Category;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\MenuStoreRequest;
-use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
@@ -19,10 +21,10 @@ class MenuController extends Controller
     public function index()
     {
         {
+            $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
             $menus = Menu::all();
-            return view('admin.menus.index', compact('menus'));
+            return view('member.menus.index', compact('menus', 'restaurants'));
         }
-    
     }
 
     /**
@@ -32,9 +34,10 @@ class MenuController extends Controller
      */
     public function create()
     {
+        $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
         $categories = Category::all();
         $menus = Menu::all();
-        return view('admin.menus.create', compact('categories'));
+        return view('member.menus.create', compact('categories', 'restaurants'));
     }
 
     /**
@@ -46,13 +49,12 @@ class MenuController extends Controller
     public function store(MenuStoreRequest $request)
     {
         $image = $request->file('image')->store('public/menus');
-
         $menu = Menu::create([
             'name' => $request->name,
-            'user_id' => $request->user_id,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $image
+            'image' => $image,
+            'restaurant_id' => $request->restaurant_id
         ]);
 
         if($request->has('categories'))
@@ -60,7 +62,7 @@ class MenuController extends Controller
             $menu->categories()->attach($request->categories);
         }
 
-        return to_route('admin.menus.index')->with('success', 'Menu created successfully');
+        return to_route('member.menus.index')->with('success', 'Menu created successfully');
     }
 
     /**
@@ -72,7 +74,7 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         $categories = Category::all();
-        return view('admin.menus.edit', compact('menu', 'categories'));
+        return view('member.menus.edit', compact('menu', 'categories'));
     }
 
     /**
@@ -107,7 +109,7 @@ class MenuController extends Controller
             $menu->categories()->sync($request->categories);
         }
 
-        return to_route('admin.menus.index')->with('success', 'Menu updated successfully');
+        return to_route('member.menus.index')->with('success', 'Menu updated successfully');
     }
 
     /**
@@ -122,6 +124,6 @@ class MenuController extends Controller
         $menu->categories()->detach();
         $menu->delete();
 
-        return to_route('admin.menus.index')->with('danger', 'Menu deleted successfully');
+        return to_route('member.menus.index')->with('danger', 'Menu deleted successfully');
     }
 }

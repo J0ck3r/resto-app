@@ -21,14 +21,13 @@
         <div class="wrapper">
            <!-- Navbar -->
                 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-                @include('admin.navigation')
-
+                    @include('admin.navigation')
             <!-- Left navbar links -->
-                 </nav>
+                </nav>
             <!-- /.navbar -->
             <!-- Main Sidebar Container -->
                 <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
-            @include('admin.sidebar')
+                    @include('admin.sidebar')
             <!-- /.sidebar -->
                 </aside>
                 <!-- Content Wrapper. Contains page content -->
@@ -50,12 +49,12 @@
                     @endif
                     
                     <!-- Content Header (Page header) -->
-                @yield('content')
+                    @yield('content')
                  <!-- /.content -->
                     </div>
                 <!-- /.content-wrapper -->
             <footer class="main-footer">
-            @include('admin.footer')
+                    @include('admin.footer')
             </footer>
         </div>
             <!-- jQuery -->
@@ -64,6 +63,5 @@
             <!-- AdminLTE App -->
             <!-- AdminLTE for demo purposes -->
             @vite(['resources/js/jquery.min.js', 'resources/js/bootstrap.bundle.min.js', 'resources/js/adminlte.min.js'])
-
     </body>
 </html>

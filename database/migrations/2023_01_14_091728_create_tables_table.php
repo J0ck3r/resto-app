@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('restaurant_id');
             $table->integer('table_number');
+            $table->integer('restaurant_id');
             $table->integer('guest_count');
             $table->string('status')->default('avaliable');
             $table->string('location');
             $table->timestamps();
+            $table->unique(['restaurant_id', 'table_number']);
         });
     }
 

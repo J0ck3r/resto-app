@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('res_date');
             $table->unsignedInteger('table_id');
             $table->integer('guest_count');
+            $table->unsignedInteger('restaurant_id');
             $table->timestamps();
         });
     }

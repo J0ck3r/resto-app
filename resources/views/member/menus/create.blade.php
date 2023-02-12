@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.auth')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('admin.menus.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('member.menus.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card-body">
                 <div class="form-group">
@@ -37,15 +37,20 @@
                 @error('price')
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
-                <div class="form-group">
-                  <label for="categories" class="block">{{ __('Categories') }}</label>
-                  <select id="categories" name="categories[]" multiple>
-                    @foreach ($categories as $category)
-                      <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                  </select>
+                <h5>{{ _('Categories') }}</h5>
+                <div class="form-group clearfix">
+                  @foreach ($categories as $category)
+                  <label>
+                    <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+                    <span></span>
+                    {{ $category->name }}
+                  </label>
+                  <br>
+                  @endforeach
                 </div>
-                <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                @foreach ($restaurants as $restaurant)
+                <input type="hidden" name="restaurant_id" id="restaurant_id" value="{{ $restaurant->id }}">
+                @endforeach
                 <div class="form-group">
                   <label for="image">{{ __('Image') }}</label>
                   <div class="input-group">

@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.admin')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,9 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            @foreach ($restaurants as $restaurant)
-            @if (Auth::user()->id === $restaurant->user_id)
-            <form method="POST" action="{{ route('member.restaurants.update', $restaurant->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.restaurants.update', $restaurant->id) }}" enctype="multipart/form-data">
               @csrf
               @method('PUT')
               <div class="card-body">
@@ -48,8 +46,6 @@
                 <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
               </div>
             </form>
-            @endif
-            @endforeach
           </div>
           <!-- /.card -->
         </div>

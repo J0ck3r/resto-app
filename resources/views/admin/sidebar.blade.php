@@ -11,7 +11,7 @@
           <img src="{{ Auth::user()->image }}, {{ asset('public/image/avatar.png') }}" class="img-circle elevation-2">
         </div>
         <div class="info">
-          <a href="{{ route('profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="{{ route('member.profile.edit') }}" class="d-block">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -21,18 +21,18 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a  class="nav-link {{ request()->routeIs('admin.categories.index') ? 'active':'' }}" aria-current="page" href="{{ route('admin.categories.index') }}">
+            <a  class="nav-link {{ request()->routeIs('admin.restaurants.index') ? 'active':'' }}" aria-current="page" href="{{ route('admin.restaurants.index') }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                {{ __('Categories') }}
+                {{ __('Restaurants') }}
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('admin.menus.index') ? 'active':'' }}" aria-current="page" href="{{ route('admin.menus.index') }}">
-              <i class="nav-icon fas fa-book"></i>
+            <a  class="nav-link {{ request()->routeIs('admin.managers.index') ? 'active':'' }}" aria-current="page" href="{{ route('admin.managers.index') }}">
+              <i class="nav-icon fas fa-th"></i>
               <p>
-                {{ __('Menus') }}
+                {{ __('Managers') }}
               </p>
             </a>
           </li>

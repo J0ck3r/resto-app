@@ -1,28 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
-use App\Models\Table;
+use App\Models\User;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\RestaurantStoreRequest;
 
 class RestaurantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $count = Restaurant::select('*')->where('user_id', Auth::user()->id)->count();
         $restaurants = Restaurant::all();
-        return view('member.restaurants.index', compact('restaurants', 'count'));
+        $users = User::all();
+        return view('admin.restaurants.index', compact('restaurants', 'users'));
     }
 
     /**
@@ -32,9 +25,9 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        return view('member.restaurants.create');
+        $users = User::all();
+        return view('admin.restaurants.create', compact('users'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -46,20 +39,15 @@ class RestaurantController extends Controller
     {
         $image = $request -> file('image')->store('public/restaurants');
 
-        $restaurant = Restaurant::create([
+        Restaurant::create([
+            'user_id' => $request->user_id,
             'name' => $request->name,
             'description' => $request->description,
             'location' => $request->location,
-            'image' => $image,
-            'user_id' => $request->user_id,
+            'image' => $image
         ]);
 
-        if($request->has('users'))
-        {
-            $restaurant->users()->attach($request->users);
-        }
-
-        return to_route('member.restaurants.index');
+        return to_route('admin.restaurants.index');
     }
 
     /**
@@ -68,10 +56,10 @@ class RestaurantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit(Restaurant $restaurant)
     {
-        $restaurants = Restaurant::all();
-        return view('member.restaurants.edit', compact('restaurants'));
+        $users = User::all();
+        return view('admin.restaurants.edit', compact('restaurant', 'users'));
     }
 
     /**
@@ -86,7 +74,8 @@ class RestaurantController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'location' => 'required'
+            'location' => 'required',
+            'user_id' => 'required'
         ]);
         $image = $restaurant->image;
         if($request->hasFile('image'))
@@ -98,10 +87,10 @@ class RestaurantController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'location'=> $request->location,
-            'image'=> $image
+            'image'=> $image,
+            'user_id' => $request->user_id
         ]);
-
-        return to_route('member.restaurants.index');
+        return to_route('admin.restaurants.index');
     }
 
     /**
@@ -113,8 +102,9 @@ class RestaurantController extends Controller
     public function destroy(Restaurant $restaurant)
     {
         Storage::delete($restaurant->image);
+        $restaurant->users()->detach();
         $restaurant->delete();
 
-        return to_route('member.restaurants.index');
+        return to_route('admin.restaurants.index');
     }
 }

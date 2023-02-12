@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.admin')
 @section('content')
     <!-- Main content -->
 <section class="content">
@@ -13,7 +13,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('member.restaurants.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.restaurants.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card-body">
                 <div class="form-group">
@@ -27,7 +27,7 @@
                   <label for="description">{{ __('Description') }}</label>
                   <textarea class="form-control @error('description') is-invalid @enderror" id="description" rows="3" name="description" placeholder="{{ __('Enter Description') }}"></textarea>
                 </div>
-                @error('description')
+                @error('description')description
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
                 <div class="form-group">
@@ -37,6 +37,7 @@
                 @error('location')
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
+                <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
                 <div class="form-group">
                   <label for="image">{{ __('Image') }}</label>
                   <div class="input-group">
@@ -49,7 +50,6 @@
                   <div class="text-sm text-red-400">{{ $message }}</div>
                 @enderror
               </div>
-              <input type="hidden" name="user_id" id="user_id" value="{{ Auth::User()->id }}">
               <!-- /.card-body -->
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
