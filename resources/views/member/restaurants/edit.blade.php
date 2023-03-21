@@ -42,6 +42,20 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label for="open_time">{{ __('open Time') }}</label>
+                  <input type="datetime-local" class="form-control @error('open_time') is-invalid @enderror" id="open_time" name="open_time" value="{{ $restaurant->open_time }}">
+                </div>
+                @error('open_time')
+                  <div class="text-sm text-red-400">{{ $message }}</div>
+                @enderror
+                <div class="form-group">
+                  <label for="close_time">{{ __('Close Time') }}</label>
+                  <input type="datetime-local" class="form-control @error('close_time') is-invalid @enderror" id="close_time" name="close_time" value="{{ $restaurant->close_time }}">
+                </div>
+                @error('close_time')
+                  <div class="text-sm text-red-400">{{ $message }}</div>
+                @enderror  
               </div>
               <!-- /.card-body -->
               <div class="card-footer">

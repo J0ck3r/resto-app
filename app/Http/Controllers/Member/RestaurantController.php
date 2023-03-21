@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Member;
 
-use App\Models\Menu;
-use App\Models\Table;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,7 +33,6 @@ class RestaurantController extends Controller
         return view('member.restaurants.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -52,6 +49,8 @@ class RestaurantController extends Controller
             'location' => $request->location,
             'image' => $image,
             'user_id' => $request->user_id,
+            'open_time' => $request->open_time,
+            'close_time' => $request->close_time
         ]);
 
         if($request->has('users'))
@@ -98,6 +97,8 @@ class RestaurantController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'location'=> $request->location,
+            'open_time' => $request->open_time,
+            'close_time' => $request->close_time,
             'image'=> $image
         ]);
 

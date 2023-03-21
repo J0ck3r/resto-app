@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Member;
 
 use App\Models\Table;
-use App\Enums\TableStatus;
 use App\Models\Restaurant;
-use App\Models\Reservation;
-use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TableStoreRequest;
+use Illuminate\Support\Facades\Validator;
 
 class TableController extends Controller
 {
@@ -25,7 +24,6 @@ class TableController extends Controller
             $tables = Table::all();
             return view('member.tables.index', compact('tables', 'restaurants'));
         }
-    
     }
 
     /**
@@ -36,6 +34,7 @@ class TableController extends Controller
     public function create()
     {
         $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
+       
         return view('member.tables.create', compact('restaurants'));
     }
 
@@ -45,18 +44,31 @@ class TableController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TableStoreRequest $request)
-    {
-        Table::create([
-            'table_number' => $request->table_number,
-            'restaurant_id' => $request->restaurant_id,
-            'guest_count' => $request->guest_count,
-            'status' => $request->status,
-            'location' => $request->location
-        ]);
+    public function store(TableStoreRequest $request, Table $table)
+{
+    $table->table_number = $request->table_number;
+    $validator = Validator::make($table->toArray(), [
+        'table_number' => [
+            'required',
+            Rule::unique('tables')->where(function ($query) use ($request, $table) {
+                return $query->where('restaurant_id', $request->restaurant_id)->where('id', '!=', $table->id);
+            })
+        ]
+    ]);
 
-        return to_route('member.tables.index')->with('success', 'Table created successfully');
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
     }
+
+    $table->restaurant_id = $request->restaurant_id;
+    $table->guest_count = $request->guest_count;
+    $table->status = $request->status;
+    $table->location = $request->location;
+    $table->save();
+
+    return to_route('member.tables.index')->with('success', 'Table created successfully');
+}
+
 
     /**
      * Display the specified resource.
@@ -91,7 +103,27 @@ class TableController extends Controller
     public function update(TableStoreRequest $request, Table $table)
     { 
         {
-            $table->update($request->validated());
+            $table->restaurant_id = $request->restaurant_id;
+            $table->table_number = $request->table_number;
+            $table->status = $request->status;
+            $table->guest_count = $request->guest_count;
+            $table->location = $request->location;
+
+            // Validate the updated table_number
+            $validator = Validator::make($table->toArray(), 
+            ['table_number' => ['required',  Rule::unique('tables')->where(function ($query) use ($request, $table) 
+            {
+                return $query->where('restaurant_id', $request->restaurant_id)->where('id', '!=', $table->id)->whereNull('deleted_at');
+            })
+        ]
+    ]);
+
+            if ($validator->fails()) 
+            {
+                return back()->withErrors($validator)->withInput();
+            }
+
+            $table->save();
         } 
             return to_route('member.tables.index')->with('success', 'Table updated successfully');
     }

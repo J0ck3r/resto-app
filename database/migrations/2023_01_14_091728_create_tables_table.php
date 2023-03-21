@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->integer('restaurant_id');
             $table->integer('table_number');
-            $table->integer('restaurant_id');
             $table->integer('guest_count');
             $table->string('status')->default('avaliable');
             $table->string('location');

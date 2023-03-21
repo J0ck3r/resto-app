@@ -1,23 +1,28 @@
 @extends('layouts.guest')
 @section('content')
 <!-- Main Hero Content -->
-<div class="container max-w-lg px-4 py-32 mx-auto text-left bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('https://cdn.pixabay.com/photo/2016/11/18/14/39/beans-1834984_960_720.jpg')">
-<h1
-  class="font-mono text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 md:text-center sm:leading-none lg:text-5xl">
-  <span class="inline md:block">Welcome To Larainfo Restaurant</span>
-</h1>
-<div class="mx-auto mt-2 text-green-50 md:text-center lg:text-lg">
-  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatem ab necessitatibus illo praesentium
-  culpa excepturi quae commodi quaerat,
-</div>
-<div class="flex flex-col items-center mt-12 text-center">
-  <span class="relative inline-flex w-full md:w-auto">
-    <a href="{{ route ('reservations.step.one') }}" type="button"
-      class="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-6 text-white bg-green-600 rounded-full lg:w-full md:w-auto hover:bg-green-500 focus:outline-none">
-      {{ __('Make Your Reservation') }}
-    </a>
-</div>
-</div>
+<section class="mt-8 bg-white">
+  <div class="mt-4 text-center">
+    <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
+      {{ __('Restaurants') }}</h2>
+  </div>
+  <div class="container w-full px-5 py-6 mx-auto">
+    <div class="grid lg:grid-cols-4 gap-y-6">
+      @foreach ($restaurants as $restaurant)
+      <a href="{{ route('restaurants.show', $restaurant->id) }}" class="max-w-xs mx-4 mb-2 rounded-lg shadow-lg">
+        <img class="w-full h-48" src="{{ Storage::url($restaurant->image) }}" alt="Image" />
+        <div class="px-6 py-4">
+          <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">{{ $restaurant->name }}</h4>
+          <p class="leading-normal text-gray-700">{{$restaurant->description}}</p>
+          <br>
+          <span leading-normal class="text-orange-600">{{ _(('Rating')) }}</span>
+          <p class="leading-normal text-yellow-300">{{ _(('1/5')) }}</p>
+        </div>
+      </a>
+      @endforeach
+    </div>
+  </div>
+  </section>
 <!-- End Main Hero Content -->
 <section class="px-2 py-32 bg-white md:px-0">
 <div class="container items-center max-w-6xl px-8 mx-auto xl:px-5">
@@ -108,78 +113,23 @@
 </section>
 <section class="mt-8 bg-white">
 <div class="mt-4 text-center">
-  <h3 class="text-2xl font-bold">Our Menu</h3>
   <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-    TODAY'S SPECIALITY</h2>
+    {{ __(("TODAY'S SPECIALITY")) }}</h2>
 </div>
 <div class="container w-full px-5 py-6 mx-auto">
   <div class="grid lg:grid-cols-4 gap-y-6">
     @foreach ($specials->menus as $menu)
-    <div class="max-w-xs mx-4 mb-2 rounded-lg shadow-lg">
+    <a href="{{ route('restaurants.show', $menu->restaurant_id) }}" class="max-w-xs mx-4 mb-2 rounded-lg shadow-lg">
       <img class="w-full h-48" src="{{ Storage::url($menu->image) }}" alt="Image" />
       <div class="px-6 py-4">
         <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">{{ $menu->name }}</h4>
         <p class="leading-normal text-gray-700">{{$menu->description}}</p>
       </div>
       <div class="flex items-center justify-between p-4">
-        <span class="text-xl text-green-600">{{ $menu->price }}</span>
+        <span class="text-xl text-green-600">{{ $menu->price }} {{ _(('$')) }}</span>
       </div>
-    </div>
+    </a>
     @endforeach
-  </div>
-</div>
-</section>
-<section class="pt-4 pb-12 bg-gray-800">
-<div class="my-16 text-center">
-  <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">
-    Testimonial </h2>
-  <p class="text-xl text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. soluta sapient</p>
-</div>
-<div class="grid gap-2 lg:grid-cols-3">
-  <div class="max-w-md p-4 bg-white rounded-lg shadow-lg">
-    <div class="flex justify-center -mt-16 md:justify-end">
-      <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-        src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80">
-    </div>
-    <div>
-      <h2 class="text-3xl font-semibold text-gray-800">Food</h2>
-      <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores deserunt
-        ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis pariatur
-        minus consequuntur!</p>
-    </div>
-    <div class="flex justify-end mt-4">
-      <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
-    </div>
-  </div>
-  <div class="max-w-md p-4 bg-white rounded-lg shadow-lg">
-    <div class="flex justify-center -mt-16 md:justify-end">
-      <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-        src="https://cdn.pixabay.com/photo/2018/01/04/21/15/young-3061652__340.jpg">
-    </div>
-    <div>
-      <h2 class="text-3xl font-semibold text-gray-800">Food</h2>
-      <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores deserunt
-        ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis pariatur
-        minus consequuntur!</p>
-    </div>
-    <div class="flex justify-end mt-4">
-      <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
-    </div>
-  </div>
-  <div class="max-w-md p-4 bg-white rounded-lg shadow-lg">
-    <div class="flex justify-center -mt-16 md:justify-end">
-      <img class="object-cover w-20 h-20 border-2 border-green-500 rounded-full"
-        src="https://cdn.pixabay.com/photo/2018/01/18/17/48/purchase-3090818__340.jpg">
-    </div>
-    <div>
-      <h2 class="text-3xl font-semibold text-gray-800">Food</h2>
-      <p class="mt-2 text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae dolores deserunt
-        ea doloremque natus error, rerum quas odio quaerat nam ex commodi hic, suscipit in a veritatis pariatur
-        minus consequuntur!</p>
-    </div>
-    <div class="flex justify-end mt-4">
-      <a href="#" class="text-xl font-medium text-green-500">John Doe</a>
-    </div>
   </div>
 </div>
 </section>

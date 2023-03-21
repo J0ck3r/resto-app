@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\MenuController as FrontendMenuController;
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
 use App\Http\Controllers\Frontend\RestaurantController as FrontendRestaurantController;
+use App\Http\Controllers\Frontend\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::post('/reservations/step-one', [FrontendReservationController::class, 'st
 Route::get('/reservations/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
 Route::post('/reservations/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('thankyou', [WelcomeController::class, 'thankyou'])->name('thankyou');
+Route::get('/testimonials/create/{id}', [TestimonialController::class, 'create'])->name('testimonials.create');
+Route::post('/testimonials/store', [TestimonialController::class, 'store'])->name('testimonials.store');
 
 
 Route::middleware('auth', 'verified')->name('member.')->prefix('member')->group(function () 

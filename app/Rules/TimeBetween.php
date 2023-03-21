@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use Carbon\Carbon;
+use App\Models\Restaurant;
 use Illuminate\Contracts\Validation\Rule;
 
 class TimeBetween implements Rule
@@ -28,11 +29,12 @@ class TimeBetween implements Rule
     {
         $pickupDate = Carbon::parse($value);
         $pickupTime = Carbon::createFromTime($pickupDate->hour, $pickupDate->minute, $pickupDate->second);
-        // when the Restaurant is open
-        $earleastTime = Carbon::createFromTimeString('17:00:00');
-        $lastTime = Carbon::createFromTimeString('23:00:00');
+        // when the restaurant is open
+        $restaurant = Restaurant::first(); // assuming there's only one restaurant
+        $earliestTime  = Carbon::createFromTimeString($restaurant->open_time);
+        $lastTime  = Carbon::createFromTimeString($restaurant->close_time);
 
-        return $pickupTime->between($earleastTime, $lastTime) ? true : false;
+        return $pickupTime->between($earliestTime, $lastTime) ? true : false;
     }
 
     /**
@@ -42,6 +44,10 @@ class TimeBetween implements Rule
      */
     public function message()
     {
-        return 'Please choose the Time between 17:00 - 23:00.';
+        $restaurant = Restaurant::first(); // assuming there's only one restaurant
+        return __('The :attribute must be between :open_time and :close_time.', [
+        'open_time' => $restaurant->open_time,
+        'close_time' => $restaurant->close_time,
+    ]);
     }
 }

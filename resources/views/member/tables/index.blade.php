@@ -35,7 +35,7 @@
                   @foreach ($tables as $table)
                   @if ($table->restaurant_id === $restaurant->id)
                   <tbody>
-                  <tr>
+                  <tr style="text-align: center">
                     <td>{{ $table->table_number }}</td>
                     <td>{{ $table->guest_count }}</td>
                     <td>{{ $table->status }}</td>

@@ -36,7 +36,7 @@
                   @foreach ($reservations as $restaurantReservations)
                   @foreach ($restaurantReservations as $reservation)
                   <tbody>
-                  <tr>
+                  <tr style="text-align: center">
                     <td>{{ $reservation->first_name }} {{ $reservation->last_name }}</td>
                     <td>{{ $reservation->email }}</td>
                     <td>{{ $reservation->phone }}</td>

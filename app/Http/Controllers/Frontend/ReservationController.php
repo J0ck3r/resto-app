@@ -68,6 +68,9 @@ class ReservationController extends Controller
         ]);
         $reservation = $request->session()->get('reservation');
         $reservation->fill($validated);
+        $table = $reservation->table;
+        $table->status = TableStatus::Avaliable;
+        $table->save();
         $reservation->save();
         $request->session()->forget('reservation');
 

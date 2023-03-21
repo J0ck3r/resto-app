@@ -29,7 +29,7 @@
                     <th>{{ __('Price') }}</th>
                     <th>{{ __('Image') }}</th>
                     <th style="width: 40px">{{ __('Action') }}</th>
-                  </tr>
+                  </tr style="text-align: center">
                   </thead>
                   @foreach ($restaurants as $restaurant)
                   @foreach ($menus as $menu)

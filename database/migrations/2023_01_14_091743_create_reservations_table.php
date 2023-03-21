@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('guest_count');
             $table->unsignedInteger('restaurant_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

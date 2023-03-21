@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TableStoreRequest extends FormRequest
+class TestimonialStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +24,11 @@ class TableStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'table_number' => ['required', 'integer'],
-            'status' => ['required', 'string'],
-            'guest_count' => ['required', 'integer'],
-            'restaurant_id' => ['required', 'integer'],
-            'location' => ['required', 'string'],
+            'restaurant_id' => 'required', 'integer',
+            'name' => 'required', 'string',
+            'comment' => 'required', 'string',
+            'email' => 'required', 'string',
+            'rating' => 'required', 'float'
         ];
     }
 }

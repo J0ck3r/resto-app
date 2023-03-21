@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Menu;
 use App\Models\Restaurant;
 use App\Http\Controllers\Controller;
-use SebastianBergmann\GlobalState\Restorer;
+use App\Models\Testimonial;
 
 class RestaurantController extends Controller
 {
@@ -22,7 +22,8 @@ class RestaurantController extends Controller
 
     public function show($restaurants)
     {
+        $testimonials = Testimonial::where('restaurant_id', $restaurants)->get();
         $menus = Menu::where('restaurant_id', $restaurants)->get();
-        return view('restaurants.show', compact('menus'));
+        return view('restaurants.show', compact('menus', 'testimonials', 'restaurants'));
     }
 }

@@ -29,6 +29,7 @@
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Description') }}</th>
                     <th>{{ __('Location') }}</th>
+                    <th>{{ __('Work Time') }}</th>
                     <th>{{ __('Image') }}</th>
                     <th style="width: 40px">{{ __('Action') }}</th>
                   </tr>
@@ -36,10 +37,11 @@
                   @foreach ($restaurants as $restaurant)
                   @if (Auth::user()->id === $restaurant->user_id)
                   <tbody>
-                  <tr>
+                  <tr style="text-align: center">
                     <td>{{ $restaurant->name }}</a></td>
                     <td>{{ $restaurant->description }}</a></td>
                     <td>{{ $restaurant->location }}</a></td>
+                    <td>{{ $restaurant->open_time }} - {{ $restaurant->close_time }}</a></td>
                     <td><img src="{{ Storage::url($restaurant->image) }}" class="h-16 w-16 rounded d-block mx-auto"></a></td>
                     <td class="vert-align">
                       <div class="flex space-x-3">

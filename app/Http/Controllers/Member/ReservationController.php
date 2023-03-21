@@ -7,7 +7,6 @@ use App\Models\Table;
 use App\Enums\TableStatus;
 use App\Models\Restaurant;
 use App\Models\Reservation;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReservationStoreRequest;
@@ -29,21 +28,21 @@ class ReservationController extends Controller
         $reservations = [];
 
         foreach ($restaurants as $restaurant) 
-        {
-            $restaurant_id = $restaurant->id;
-    
-            $tables = Table::where('restaurant_id', $restaurant_id)->get(['id']);
+            {
+                    $restaurant_id = $restaurant->id;
+            
+                    $tables = Table::where('restaurant_id', $restaurant_id)->get(['id']);
 
-        foreach ($tables as $table) 
-        {
-            $table_id = $table->id;
+                foreach ($tables as $table) 
+                {
+                    $table_id = $table->id;
 
-            $reservations[] = Reservation::where('table_id', $table_id)->get();
-        }
-        }
+                    $reservations[] = Reservation::where('table_id', $table_id)->get();
+                }
+            }
 
-            return view('member.reservation.index', ['reservations' => $reservations]);
-        }
+        return view('member.reservation.index', ['reservations' => $reservations]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -52,7 +51,19 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        $tables = Table::where('status', TableStatus::Avaliable)->get();
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $restaurants = Restaurant::where('user_id', $user_id)->get(['id']);
+
+        $reservations = [];
+
+        foreach ($restaurants as $restaurant) 
+            {
+                    $restaurant_id = $restaurant->id;
+            
+                    $tables = Table::where('restaurant_id', $restaurant_id)->where('status', TableStatus::Avaliable)->get();
+            }
         return view('member.reservation.create', compact('tables'));
     }
 
@@ -78,6 +89,7 @@ class ReservationController extends Controller
             }
         }
         Reservation::create($request->validated());
+        $table->update(['status' => TableStatus::Pending]);
 
         
 
@@ -103,8 +115,19 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
-        $tables = Table::where('status', TableStatus::Avaliable)->get();
-        return view('member.reservation.edit', compact('reservation', 'tables'));
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $restaurants = Restaurant::where('user_id', $user_id)->get(['id']);
+
+        $reservations = [];
+
+        foreach ($restaurants as $restaurant) 
+            {
+                    $restaurant_id = $restaurant->id;
+                    $tables = Table::where('restaurant_id', $restaurant_id)->where('status', TableStatus::Avaliable)->get();
+            }    
+                    return view('member.reservation.edit', compact('reservation', 'tables'));
     }
 
     /**
@@ -131,6 +154,7 @@ class ReservationController extends Controller
             }
         }
         $reservation->update($request->validated());
+        $table->update(['status' => TableStatus::Pending]);
 
         return to_route('member.reservation.index')->with('success', 'Reservation updated successfully');
     }
@@ -143,6 +167,9 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation)
     {
+        $table = $reservation->table;
+        $table->status = TableStatus::Avaliable;
+        $table->save();
         $reservation->delete();
 
         return to_route('member.reservation.index')->with('warning', 'Reservation deleted successfully');

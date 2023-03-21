@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('location');
             $table->string('image');
             $table->integer('user_id');
+            $table->dateTime('open_time');
+            $table->dateTime('close_time');
             $table->timestamps();
         });
     }

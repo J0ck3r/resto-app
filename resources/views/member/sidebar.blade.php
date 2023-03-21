@@ -24,7 +24,7 @@
                 <a  class="nav-link {{ request()->routeIs('member.restaurants.index' ) ? 'active':'' }}" aria-current="page" href="{{ route('member.restaurants.index') }}">
                   <i class="nav-icon fas fa-th"></i>
                   <p>
-                    {{ __('Restaurants') }}
+                    {{ __('Restaurant') }}
                   </p>
                 </a>
               </li>
@@ -55,9 +55,11 @@
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('member.reservation.index') ? 'active':'' }}" aria-current="page" href="{{ route('member.reservation.index') }}">
               <i class="nav-icon fas fa-edit"></i>
-              <span class="badge badge-danger right">6</span>
+              @if ($reservation_count > 0) 
+              <span class="badge badge-danger right">{{ $reservation_count }}</span>
+              @endif
               <p>
-                {{ __('Reservation') }}
+                {{ __('Reservations') }}
               </p>
             </a>
           </li>
