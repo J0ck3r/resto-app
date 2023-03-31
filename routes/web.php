@@ -53,8 +53,10 @@ Route::middleware('auth', 'verified')->name('member.')->prefix('member')->group(
     Route::get('/', [MemberController::class, 'index'])->name('index');
     Route::resource('/restaurants', RestaurantController::class);
     //Route::resource('/categories', CategoryController::class);
-    Route::resource('/menus', MenuController::class);
+    Route::resource('/menus', MenuController::class)->except('show');
     Route::resource('/tables', TableController::class);
+    Route::patch('/menus/{menu}/restore', [MenuController::class, 'restore'])->name('menus.restore');
+    Route::delete('/menus/{menu}/force-delete', [MenuController::class, 'forceDelete'])->name('menus.force-delete');
     Route::resource('/reservation', ReservationController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

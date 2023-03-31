@@ -27,6 +27,7 @@ class TestimonialStoreRequest extends FormRequest
             'restaurant_id' => 'required', 'integer',
             'name' => 'required', 'string',
             'comment' => 'required', 'string',
+            'title' => 'required', 'string',
             'email' => 'required', 'string',
             'rating' => 'required', 'float'
         ];

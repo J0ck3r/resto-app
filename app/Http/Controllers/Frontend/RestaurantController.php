@@ -24,6 +24,10 @@ class RestaurantController extends Controller
     {
         $testimonials = Testimonial::where('restaurant_id', $restaurants)->get();
         $menus = Menu::where('restaurant_id', $restaurants)->get();
-        return view('restaurants.show', compact('menus', 'testimonials', 'restaurants'));
+        $count = $testimonials->count('rating');
+         // Calculate average rating
+        $avg_rating = $testimonials->avg('rating');
+        $avg_rating = number_format($avg_rating, 1);
+        return view('restaurants.show', compact('menus', 'testimonials', 'restaurants', 'avg_rating', 'count'));
     }
 }

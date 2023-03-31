@@ -22,8 +22,21 @@ class MenuController extends Controller
     {
         {
             $restaurants = Restaurant::where('user_id', Auth::user()->id)->get();
-            $menus = Menu::all();
-            return view('member.menus.index', compact('menus', 'restaurants'));
+            $menus = Menu::withTrashed()->get();
+
+            $nonDeletedMenus = $menus->reject(function($menu) 
+            { 
+                // Separate non-deleted menus
+                return $menu->deleted_at != null;
+            });
+
+            $softDeletedMenus = $menus->filter(function($menu) 
+            { 
+                // Separate soft-deleted menus
+                return $menu->deleted_at != null;
+            });
+
+            return view('member.menus.index', compact('menus', 'restaurants', 'nonDeletedMenus', 'softDeletedMenus'));
         }
     }
 
@@ -120,10 +133,39 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        Storage::delete($menu->image);
+        // check if the menu is already soft deleted
+        $isSoftDeleted = $menu->trashed();
+
+        // detach the categories
         $menu->categories()->detach();
+
+        // soft delete the menu
         $menu->delete();
 
-        return to_route('member.menus.index')->with('danger', 'Menu deleted successfully');
+        // restore or permanently delete link
+        $link = '';
+        if ($isSoftDeleted) {
+            $link = '<a href="' . route('member.menus.restore', $menu->id) . '">Restore</a> | 
+                    <a href="' . route('member.menus.force-delete', $menu->id) . '">Permanently Delete</a>';
+        }
+
+        return redirect()->route('member.menus.index')->with('danger', 'Menu deleted successfully. ' . $link);
+    }
+
+    public function restore($id)
+    {
+        $menu = Menu::withTrashed()->findOrFail($id);
+        $menu->restore();
+
+        return redirect()->route('member.menus.index')->with('success', 'Menu restored successfully');
+    }
+
+    public function forceDelete($id)
+    {
+        $menu = Menu::onlyTrashed()->findOrFail($id);
+        Storage::delete($menu->image);
+        $menu->forceDelete();
+        
+        return redirect()->route('member.menus.index')->with('success', 'Menu permanently deleted');
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('restaurant_id');
             $table->string('name');
+            $table->string('title');
             $table->string('comment');
             $table->string('email');
             $table->float('rating');

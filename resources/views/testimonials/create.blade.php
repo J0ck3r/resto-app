@@ -8,7 +8,7 @@
                     <img class="object-cover w-full h-full"
                         src="https://cdn.pixabay.com/photo/2021/01/15/17/01/green-5919790__340.jpg" alt="img" />
                 </div>
-                <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+                <div class="flex items-center justify-center p-8 sm:p-12 md:w-1/2">
                     <div class="w-full">
                         <h3 class="mb-4 text-xl font-bold text-blue-600">{{ __('Write Your Testimonial') }}</h3>
 
@@ -16,8 +16,28 @@
                             <div
                                 class="w-100 p-1 text-xs font-medium leading-none text-center text-blue-100 bg-blue-600 rounded-full">{{ __('Write us Your Comment') }}</div>
                         </div>
+                        <div class="p-3">
+                        </div>
                         <form method="POST" action="{{ route('testimonials.store', $restaurants) }}">
                             @csrf
+                            <p>
+                            <div class="flex items-center mb-5 sm:col-span-6">
+                                <div class="rate">
+                                    <input type="radio" id="5" class="rate" name="rating" value="5"/>
+                                    <label for="5">5 stars</label>
+                                    <input type="radio" id="4" class="rate" name="rating" value="4"/>
+                                    <label for="4">4 stars</label>
+                                    <input type="radio" id="3" class="rate" name="rating" value="3"/>
+                                    <label for="3">3 stars</label>
+                                    <input type="radio" id="2" class="rate" name="rating" value="2">
+                                    <label for="star2">2 stars</label>
+                                    <input type="radio" id="1" class="rate" name="rating" value="1"/>
+                                    <label for="1">1 star</label>
+                                 </div>
+                            </div>
+                            @error('rating')
+                            <div class="text-sm text-red-400">{{ $message }}</div>
+                            @enderror
                             <div class="sm:col-span-6">
                                 <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name')}}
                                 </label>
@@ -25,6 +45,16 @@
                                     <input type="text" id="name" name="name" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                                 </div>
                                 @error('name')
+                                    <div class="text-sm text-red-400">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="sm:col-span-6">
+                                <label for="title" class="block text-sm font-medium text-gray-700">{{ __('Title')}}
+                                </label>
+                                <div class="mt-1">
+                                    <input type="text" id="title" name="title" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                </div>
+                                @error('title')
                                     <div class="text-sm text-red-400">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -47,20 +77,9 @@
                                     <div class="text-sm text-red-400">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="sm:col-span-6">
-                                <label for="rating" class="block text-sm font-medium text-gray-700">{{ __('Rating')}}
-                                </label>
-                                <div class="mt-1">
-                                    <input type="text" id="rating" name="rating" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                                </div>
-                                @error('rating')
-                                    <div class="text-sm text-red-400">{{ $message }}</div>
-                                @enderror
-                            </div>
                                 <input type="hidden" name="restaurant_id" id="restaurant_id" value="{{ $restaurants }}">
-                              
                             <div class="mt-6 p-4 flex justify-end">
-                                <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">{{ __('Next') }}</button>
+                                <button type="submit" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">{{ __('Send') }}</button>
                             </div>
                         </form>
                     </div>

@@ -19,6 +19,7 @@ class TestimonialController extends Controller
             'restaurant_id' => $request->restaurant_id,
             'name' => $request->name,
             'comment' => $request->comment,
+            'title' => $request->title,
             'email' => $request->email,
             'rating' => $request->rating
         ]);

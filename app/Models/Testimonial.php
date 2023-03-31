@@ -15,6 +15,7 @@ class Testimonial extends Model
         'restaurant_id',
         'name',
         'comment',
+        'title',
         'email',
         'rating'
     ];
