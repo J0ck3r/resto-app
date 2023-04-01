@@ -110,81 +110,68 @@
                   </div>
                   <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ $one_star_percent }}%</span>
                 </div>
-            </div> 
-          </div>
-        </div>
-              @foreach ($testimonials as $testimonial)
-              <div class="col-sm-3">
-                <h4>{{ __('Rating breakdown') }}</h4>
-                <div class="pull-left">
-                  <div class="pull-left" style="width:35px; line-height:1;">
-                    <div style="height:9px; margin:5px 0;">5 <span class="glyphicon glyphicon-star"></span></div>
-                  </div>
-                  <div class="pull-left" style="width:180px;">
-                    <div class="progress" style="height:9px; margin:8px 0;">
-                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
-                      <span class="sr-only">80% Complete (danger)</span>
+              </div>          
+                <article>
+                  @foreach ($testimonials as $testimonial)
+                  <div class="flex items-center mb-4 space-x-4">
+                      <div class="space-y-1 font-medium dark:text-white">
+                          <p>{{ $testimonial->name }} <time datetime="{{ $testimonial->created_at->format('j F Y') }}" class="block text-sm text-gray-500 dark:text-gray-400"></time></p>
                       </div>
-                    </div>
                   </div>
-                  <div class="pull-right" style="margin-left:10px;">1</div>
-                </div>
-                <div class="pull-left">
-                  <div class="pull-left" style="width:35px; line-height:1;">
-                    <div style="height:9px; margin:5px 0;">4 <span class="glyphicon glyphicon-star"></span></div>
-                  </div>
-                  <div class="pull-left" style="width:180px;">
-                    <div class="progress" style="height:9px; margin:8px 0;">
-                      <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
-                      <span class="sr-only">80% Complete (danger)</span>
+                  <div class="flex items-center mb-1">
+                    <div class="relative inline-block mt-8">
+                      <div class="text-gray-200 inline-flex space-x-1">
+                        <svg viewBox="0 0 32 30" class="w-8 h-8">
+                            <use xlink:href="#star"></use>
+                        </svg>
+                        <svg viewBox="0 0 32 30" class="w-8 h-8">
+                            <use xlink:href="#star"></use>
+                        </svg>
+                        <svg viewBox="0 0 32 30" class="w-8 h-8">  
+                            <use xlink:href="#star"></use>
+                        </svg>    
+                        <svg viewBox="0 0 32 30" class="w-8 h-8">
+                            <use xlink:href="#star"></use>
+                        </svg>    
+                        <svg viewBox="0 0 32 30" class="w-8 h-8">
+                            <use xlink:href="#star"></use>
+                        </svg>    
                       </div>
+                      <div class="overflow-hidden absolute left-0 top-0 text-yellow-400 flex space-x-1" style="width: {{ $testimonial->rating * 20 }}%;">
+                        <svg viewBox="0 0 32 30" class="w-8 h-8 flex-shrink-0">
+                            <use xlink:href="#star"></use>
+                        </svg>
+                        <svg viewBox="0 0 32 30" class="w-8 h-8 flex-shrink-0	">
+                            <use xlink:href="#star"></use>
+                        </svg>
+                        <svg viewBox="0 0 32 30" class="w-8 h-8 flex-shrink-0	">  
+                            <use xlink:href="#star"></use>
+                        </svg>    
+                        <svg viewBox="0 0 32 30" class="w-8 h-8 flex-shrink-0	">
+                            <use xlink:href="#star"></use>
+                        </svg>    
+                        <svg viewBox="0 0 32 30" class="w-8 h-8 flex-shrink-0	">
+                            <use xlink:href="#star"></use>
+                        </svg>
+                      </div>   
                     </div>
+                      <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">{{ $testimonial->title }}</h3>
                   </div>
-                  <div class="pull-right" style="margin-left:10px;">1</div>
-                </div>
-                <div class="pull-left">
-                  <div class="pull-left" style="width:35px; line-height:1;">
-                    <div style="height:9px; margin:5px 0;">3 <span class="glyphicon glyphicon-star"></span></div>
-                  </div>
-                  <div class="pull-left" style="width:180px;">
-                    <div class="progress" style="height:9px; margin:8px 0;">
-                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
-                      <span class="sr-only">80% Complete (danger)</span>
+                  <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p>{{ __('Reviewed in the United Kingdom on') }} <time datetime="{{ $testimonial->created_at->format('j F Y') }}">{{ $testimonial->created_at->format('j F Y') }}</time></p></footer>
+                  <p class="mb-2 text-gray-500 dark:text-gray-400">{{ $testimonial->comment }}</p>
+                  <a href="#" class="block mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('Read more') }}</a>
+                  <aside>
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">19 {{ __('people found this helpful') }}</p>
+                      <div class="flex items-center mt-3 space-x-3 divide-x divide-gray-200 dark:divide-gray-600">
+                          <a href="#" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-xs px-2 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">{{ __('Helpful') }}</a>
+                          <a href="#" class="pl-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('Report abuse') }}</a>
                       </div>
-                    </div>
-                  </div>
-                  <div class="pull-right" style="margin-left:10px;">0</div>
-                </div>
-                <div class="pull-left">
-                  <div class="pull-left" style="width:35px; line-height:1;">
-                    <div style="height:9px; margin:5px 0;">2 <span class="glyphicon glyphicon-star"></span></div>
-                  </div>
-                  <div class="pull-left" style="width:180px;">
-                    <div class="progress" style="height:9px; margin:8px 0;">
-                      <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pull-right" style="margin-left:10px;">0</div>
-                </div>
-                <div class="pull-left">
-                  <div class="pull-left" style="width:35px; line-height:1;">
-                    <div style="height:9px; margin:5px 0;">1 <span class="glyphicon glyphicon-star"></span></div>
-                  </div>
-                  <div class="pull-left" style="width:180px;">
-                    <div class="progress" style="height:9px; margin:8px 0;">
-                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
-                      <span class="sr-only">80% Complete (danger)</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pull-right" style="margin-left:10px;">0</div>
-                </div>
-              </div>
-              @endforeach
+                  </aside>
+                  @endforeach
+                </article>
             </div>
-            @foreach ($testimonials as $testimonial)
+          </div>
+              @foreach ($testimonials as $testimonial)
             <div class="row">
               <div class="col-sm-7">
                 <hr>

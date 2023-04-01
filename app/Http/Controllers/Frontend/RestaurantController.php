@@ -16,7 +16,20 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::all();
+        $restaurants = Restaurant::leftJoinSub(
+            'SELECT restaurant_id, COUNT(*) AS total_ratings, AVG(rating) AS avg_rating FROM testimonials GROUP BY restaurant_id',
+            'testimonials',
+            'testimonials.restaurant_id',
+            '=',
+            'restaurants.id'
+        )
+        ->select('restaurants.*', 'testimonials.total_ratings', 'testimonials.avg_rating')
+        ->get()
+        ->map(function ($restaurant) {
+            $restaurant->avg_rating = number_format($restaurant->avg_rating, 1);
+            $restaurant->rating = round($restaurant->avg_rating * 20);
+            return $restaurant;
+        });
         return view('restaurants.index', compact('restaurants'));
     }
 
@@ -57,7 +70,7 @@ class RestaurantController extends Controller
         $one_star_percent = round(($one_star_ratings * 100) / $count);
         // Calculate number of filled stars and percentage of last star
         $percent = round($avg_rating * 20);
-       // dd($count, $five_star_percent);
+
         return view('restaurants.show', compact('menus', 'testimonials', 'restaurants', 'avg_rating', 'count', 'percent', 'five_star_percent', 'four_star_percent', 'three_star_percent', 'two_star_percent', 'one_star_percent'));
     }
 }
