@@ -30,7 +30,7 @@
                                     <input type="radio" id="3" class="rate" name="rating" value="3"/>
                                     <label for="3">3 stars</label>
                                     <input type="radio" id="2" class="rate" name="rating" value="2">
-                                    <label for="star2">2 stars</label>
+                                    <label for="2">2 stars</label>
                                     <input type="radio" id="1" class="rate" name="rating" value="1"/>
                                     <label for="1">1 star</label>
                                  </div>
