@@ -28,11 +28,36 @@ class RestaurantController extends Controller
          // Calculate average rating
         $avg_rating = $testimonials->avg('rating');
         $avg_rating = number_format($avg_rating, 1);
-        $max = 5;
-
+        // Calculate Star count
+        $five_star_ratings = $testimonials->filter(function($testimonial)
+        {
+            return $testimonial->rating == 5;
+        })->count();
+        $four_star_ratings = $testimonials->filter(function($testimonial)
+        {
+            return $testimonial->rating == 4;
+        })->count();
+        $three_star_ratings = $testimonials->filter(function($testimonial)
+        {
+            return $testimonial->rating == 3;
+        })->count();
+        $two_star_ratings = $testimonials->filter(function($testimonial)
+        {
+            return $testimonial->rating == 2;
+        })->count();
+        $one_star_ratings = $testimonials->filter(function($testimonial)
+        {
+            return $testimonial->rating == 1;
+        })->count();
+        // Calculate Star percentage
+        $five_star_percent = round(($five_star_ratings * 100) / $count);
+        $four_star_percent = round(($four_star_ratings * 100) / $count);
+        $three_star_percent = round(($three_star_ratings * 100) / $count);
+        $two_star_percent = round(($two_star_ratings * 100) / $count);
+        $one_star_percent = round(($one_star_ratings * 100) / $count);
         // Calculate number of filled stars and percentage of last star
         $percent = round($avg_rating * 20);
-        //dd($percent, $avg_rating);
-        return view('restaurants.show', compact('menus', 'testimonials', 'restaurants', 'avg_rating', 'count', 'percent', 'max'));
+       // dd($count, $five_star_percent);
+        return view('restaurants.show', compact('menus', 'testimonials', 'restaurants', 'avg_rating', 'count', 'percent', 'five_star_percent', 'four_star_percent', 'three_star_percent', 'two_star_percent', 'one_star_percent'));
     }
 }

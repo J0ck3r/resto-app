@@ -78,37 +78,37 @@
                 <div class="flex items-center mt-4">
                   <span class="text-sm font-medium text-blue-600 dark:text-blue-500">5 star</span>
                   <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div class="h-5 bg-yellow-400 rounded" style="width: 70%"></div>
+                      <div class="h-5 bg-yellow-400 rounded" style="width: {{ $five_star_percent }}%;"></div>
                   </div>
-                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">70%</span>
+                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ $five_star_percent }}%</span>
                 </div>
                 <div class="flex items-center mt-4">
                   <span class="text-sm font-medium text-blue-600 dark:text-blue-500">4 star</span>
                   <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div class="h-5 bg-yellow-400 rounded" style="width: 17%"></div>
+                      <div class="h-5 bg-yellow-400 rounded" style="width: {{ $four_star_percent }}%;"></div>
                   </div>
-                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">17%</span>
+                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ $four_star_percent }}%</span>
                 </div>
                 <div class="flex items-center mt-4">
                   <span class="text-sm font-medium text-blue-600 dark:text-blue-500">3 star</span>
                   <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div class="h-5 bg-yellow-400 rounded" style="width: 8%"></div>
+                      <div class="h-5 bg-yellow-400 rounded" style="width: {{ $three_star_percent }}%;"></div>
                   </div>
-                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">8%</span>
+                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ $three_star_percent }}%</span>
                 </div>
                 <div class="flex items-center mt-4">
                   <span class="text-sm font-medium text-blue-600 dark:text-blue-500">2 star</span>
                   <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div class="h-5 bg-yellow-400 rounded" style="width: 4%"></div>
+                      <div class="h-5 bg-yellow-400 rounded" style="width: {{ $two_star_percent }}%;"></div>
                   </div>
-                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">4%</span>
+                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ $two_star_percent }}%</span>
                 </div>
                 <div class="flex items-center mt-4">
                   <span class="text-sm font-medium text-blue-600 dark:text-blue-500">1 star</span>
                   <div class="w-2/4 h-5 mx-4 bg-gray-200 rounded dark:bg-gray-700">
-                      <div class="h-5 bg-yellow-400 rounded" style="width: 1%"></div>
+                      <div class="h-5 bg-yellow-400 rounded" style="width: {{ $one_star_percent }}%;"></div>
                   </div>
-                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">1%</span>
+                  <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ $one_star_percent }}%</span>
                 </div>
             </div> 
           </div>
