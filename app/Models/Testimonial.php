@@ -17,6 +17,7 @@ class Testimonial extends Model
         'comment',
         'title',
         'email',
-        'rating'
+        'rating',
+        'helpfull'
     ];
 }

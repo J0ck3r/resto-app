@@ -22,14 +22,16 @@
     </div>
   </div>
   <section>
-          <a href="{{ route('testimonials.create', $restaurants) }}" role="button" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-              {{ __('Make a review') }}
-            </span>
-          </a>
           <div class="container w-full px-5 py-6 mx-auto">
-            <div class="grid md:grid-cols-4 gap-y-6">
+            <div class="grid md:grid-cols-3 gap-y-6">
               <div class="height-100 container d-flex justify-content-center align-items-center">
+                <div class="flex items-center mt-4">
+                  <a href="{{ route('testimonials.create', $restaurants) }}" role="button" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                      {{ __('Make a review') }}
+                    </span>
+                  </a>
+                </div>
                 <div class="flex items-center mb-3">
                   <svg class="hidden">
                     <symbol id="star" width="32" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31.77 11.857H19.74L15.99.5l-3.782 11.357H0l9.885 6.903-3.692 11.21 9.736-7.05 9.796 6.962-3.722-11.18 9.766-6.845z" fill="currentColor"/></symbol>
@@ -113,13 +115,13 @@
               </div>          
                 <article>
                   @foreach ($testimonials as $testimonial)
-                  <div class="flex items-center mb-4 space-x-4">
-                      <div class="space-y-1 font-medium dark:text-white">
-                          <p>{{ $testimonial->name }} <time datetime="{{ $testimonial->created_at->format('j F Y') }}" class="block text-sm text-gray-500 dark:text-gray-400"></time></p>
-                      </div>
-                  </div>
-                  <div class="flex items-center mb-1">
-                    <div class="relative inline-block mt-8">
+                  <div>
+                    <div class="font-medium dark:text-white">
+                        <p>{{ $testimonial->name }} <time datetime="{{ $testimonial->created_at->format('j F Y') }}" class="block text-sm text-gray-500 dark:text-gray-400"></time></p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="relative inline-block mt-2">
                       <div class="text-gray-200 inline-flex space-x-1">
                         <svg viewBox="0 0 32 30" class="w-8 h-8">
                             <use xlink:href="#star"></use>
@@ -155,59 +157,53 @@
                         </svg>
                       </div>   
                     </div>
-                      <h3 class="ml-2 text-sm font-semibold text-gray-900 dark:text-white">{{ $testimonial->title }}</h3>
+                      <h3 class="ml-4 mt-2 text-sm font-semibold text-gray-900 dark:text-white"><b>{{ $testimonial->title }}</b></h3>
                   </div>
-                  <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p>{{ __('Reviewed in the United Kingdom on') }} <time datetime="{{ $testimonial->created_at->format('j F Y') }}">{{ $testimonial->created_at->format('j F Y') }}</time></p></footer>
-                  <p class="mb-2 text-gray-500 dark:text-gray-400">{{ $testimonial->comment }}</p>
-                  <a href="#" class="block mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('Read more') }}</a>
+                  <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p><time datetime="{{ $testimonial->created_at->format('j F Y') }}">{{ $testimonial->created_at->format('j F Y') }}</time></p></footer>
+                  <div class="testimonial-container">
+                  <p class="text-clip overflow-hidden" style="max-height: calc(1em * 2 * 14);">{{ $testimonial->comment }}</p>
+                  <a href="#" style="display: none;" class="mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500" id="read-more">{{ __('Read more') }}</a>
+                  </div>
+                  <script>
+                    var testimonialContainer = document.querySelector(".testimonial-container");
+                    var testimonialText = testimonialContainer.querySelector("p");
+                    var readMoreLink = testimonialContainer.querySelector("#read-more");
+                    var lineHeight = parseInt(getComputedStyle(testimonialText).lineHeight);
+                    var maxHeight = lineHeight * 14;
+
+                    if (testimonialText.clientHeight > maxHeight) 
+                    {
+                      readMoreLink.classList.remove('block');
+                      readMoreLink.removeAttribute('style');
+                      testimonialText.style.maxHeight = maxHeight + "px";
+                      readMoreLink.addEventListener("click", function(event) 
+                      {
+                        event.preventDefault();
+                        if (testimonialText.style.maxHeight === "none") 
+                        {
+                          testimonialText.style.maxHeight = maxHeight + "px";
+                          readMoreLink.innerText = "{{ __('Read more') }}";
+                        } 
+                        else 
+                        {
+                          testimonialText.style.maxHeight = "none";
+                          readMoreLink.innerText = "{{ __('Read less') }}";
+                        }
+                      });
+                    }
+                  </script>
                   <aside>
                       <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">19 {{ __('people found this helpful') }}</p>
                       <div class="flex items-center mt-3 space-x-3 divide-x divide-gray-200 dark:divide-gray-600">
                           <a href="#" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-xs px-2 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">{{ __('Helpful') }}</a>
-                          <a href="#" class="pl-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('Report abuse') }}</a>
+                          <a href="#" class="pl-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">{{ __('Report') }}</a>
                       </div>
                   </aside>
+                  <div class="flex items-center mt-8 mb-8 space-x-4">
+                  </div>
                   @endforeach
                 </article>
             </div>
-          </div>
-              @foreach ($testimonials as $testimonial)
-            <div class="row">
-              <div class="col-sm-7">
-                <hr>
-                <div class="review-block">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <div class="review-block-name">{{ $testimonial->name }}</div>
-                      <div class="review-block-date">{{ $testimonial->created_at->format('j F Y') }}</div>
-                    </div>
-                    <div class="col-sm-9">
-                      <div class="review-block-rate">
-                        <span class="btn btn-warning btn-xs" aria-label="Left Align">
-                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        </span>
-                        <span class="btn btn-warning btn-xs" aria-label="Left Align">
-                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        </span>
-                        <span class="btn btn-warning btn-xs" aria-label="Left Align">
-                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        </span>
-                        <span class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        </span>
-                        <span class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                        </span>
-                      </div>
-                      <div class="review-block-title">{{ $testimonial->title }}</div>
-                      <div class="review-block-description">{{ $testimonial->comment }}</div>
-                    </div>
-                  </div>
-                  <hr/>
-                </div>
-              </div>
-            </div>
-            @endforeach
           </div>
 </section>
 @endsection
