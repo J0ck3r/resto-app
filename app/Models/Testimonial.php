@@ -17,7 +17,11 @@ class Testimonial extends Model
         'comment',
         'title',
         'email',
-        'rating',
-        'helpfull'
+        'rating'
     ];
+
+    public function helpfulls()
+    {
+        return $this->hasMany(Helpfull::class);
+    }
 }

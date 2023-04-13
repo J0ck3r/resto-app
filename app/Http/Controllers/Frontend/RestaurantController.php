@@ -71,6 +71,22 @@ class RestaurantController extends Controller
         // Calculate number of filled stars and percentage of last star
         $percent = round($avg_rating * 20);
 
+        // Get the testimonial ID from the URL parameter
+        $testimonial_id = request()->route('testimonial_id');
+
+        // Get the testimonial
+        $testimonial = Testimonial::find($testimonial_id);
+
+        // Get the helpfulness data for the testimonial
+        //$helpful = $testimonial->helpfull;
+
+        // If the user marked the testimonial as helpful, update the "is_helpful" flag to true
+       // if (request()->has('helpful') && request()->get('helpful') == 'true') {
+        //    $helpful->is_helpful = true;
+       //     $helpful->save();
+       // }
+
+        //$helpfull_count = $testimonial->helpfull()->where('is_helpful', true)->count();
         return view('restaurants.show', compact('menus', 'testimonials', 'restaurants', 'avg_rating', 'count', 'percent', 'five_star_percent', 'four_star_percent', 'three_star_percent', 'two_star_percent', 'one_star_percent'));
     }
 }
